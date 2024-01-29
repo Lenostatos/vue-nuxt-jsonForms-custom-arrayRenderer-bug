@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { JsonForms } from '@jsonforms/vue';
-import { vanillaRenderers } from '@jsonforms/vue-vanilla';
-import CustomArrayRendererBuggy from '~/components/CustomArrayRendererBuggy.vue';
-import CustomArrayRendererWorkaround from '~/components/CustomArrayRendererWorkaround.vue';
-import { rankWith, isPrimitiveArrayControl } from '@jsonforms/core';
+import { JsonForms } from "@jsonforms/vue";
+import { vanillaRenderers } from "@jsonforms/vue-vanilla";
+import CustomArrayRendererBuggy from "~/components/CustomArrayRendererBuggy.vue";
+import CustomArrayRendererWorkaround from "~/components/CustomArrayRendererWorkaround.vue";
+import { rankWith, isPrimitiveArrayControl } from "@jsonforms/core";
 
 // simple data and schema with just one array
-let data = { primitiveArray: ['foo', 'bar'] };
+let data = { primitiveArray: ["foo", "bar"] };
 let schema = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
-  type: 'object',
+  $schema: "http://json-schema.org/draft-07/schema#",
+  type: "object",
   properties: {
     primitiveArray: {
-      type: 'array',
+      type: "array",
       minItems: 1,
       items: {
-        type: 'string',
+        type: "string",
       },
     },
   },
@@ -40,12 +40,11 @@ const renderersWorkaround = Object.freeze([
 // Updating and logging form data on change
 const onChange = (event: any) => {
   data = event.data;
-  console.log('Form data has changed: ', data);
+  console.log("Form data has changed: ", data);
 };
 </script>
 
 <template>
-  <h1>Buggy:</h1>
   <JsonForms
     :data="data"
     :schema="schema"

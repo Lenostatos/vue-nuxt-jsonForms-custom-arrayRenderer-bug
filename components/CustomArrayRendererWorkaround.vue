@@ -1,33 +1,26 @@
 <script lang="ts" setup>
-import type { ControlElement } from '@jsonforms/core';
-import { rendererProps, useJsonFormsControl } from '@jsonforms/vue';
+import type { ControlElement } from "@jsonforms/core";
+import { rendererProps, useJsonFormsControl } from "@jsonforms/vue";
 
-// Get JsonForms props
-const props = defineProps({
-  ...rendererProps<ControlElement>(),
-});
-// Get JsonForms state and udpate functions 
-// (analogue to example in documentation: https://jsonforms.io/api/vue/#md:basic-control-renderer-example)
+// Get props, control, and the addItem function from JsonForms
+// (analogue to example in documentation:
+// https://jsonforms.io/api/vue/#md:basic-control-renderer-example)
+const props = defineProps({ ...rendererProps<ControlElement>() });
 const jsonForms = useJsonFormsControl(props);
 
-// Bind local variable to input field
-const input = ref('baz');
-
 // Define some modification functions using the JsonForms functions
-const addNewItem = () => {
+const addItemOnClick = () => {
   console.log(
-    'JsonForms state before overwriting items: ',
+    "JsonForms state before overwriting items: ",
     jsonForms.control.value
   );
 
-  const newItems = (jsonForms.control.value.data as Array<any>).concat(
-    input.value
-  );
-  console.log('Items for overwriting: ', newItems);
+  const newItems = (jsonForms.control.value.data as Array<any>).concat("baz");
+  console.log("Items for overwriting: ", newItems);
 
   jsonForms.handleChange(props.path, newItems);
   console.log(
-    'JsonForms state after overwriting items: ',
+    "JsonForms state after overwriting items: ",
     jsonForms.control.value
   );
 };
@@ -41,7 +34,6 @@ const addNewItem = () => {
       </option>
     </select>
     <br />
-    <input v-model="input" />
-    <button @click="addNewItem">addNewItem</button>
+    <button @click="addItemOnClick">add item</button>
   </div>
 </template>
