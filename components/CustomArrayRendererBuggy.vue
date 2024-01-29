@@ -13,6 +13,7 @@ const { control, addItem, removeItems, moveDown, moveUp } =
 const input = ref('baz');
 
 // Define some modification functions using the JsonForms functions
+// !!! These all throw errors (see console) !!!
 const addNewItem = () => {
   console.log('JsonForms state before adding item: ', control.value);
 
@@ -24,15 +25,27 @@ const addNewItem = () => {
 };
 
 const removeFirstValue = () => {
-  removeItems(props.path, [0])();
+  if (removeItems) {
+    removeItems(props.path, [0])();
+  } else {
+    console.error("removeItems function was not provided by JsonForms API");
+  }
 };
 
 const moveDownFirstValue = () => {
-  moveDown(props.path, 0)();
+  if (moveDown){
+    moveDown(props.path, 0)();
+  } else {
+    console.error("moveDown function was not provided by JsonForms API");
+  }
 };
 
 const moveUpSecondValue = () => {
-  moveUp(props.path, 1)();
+  if (moveUp){
+    moveUp(props.path, 1)();
+  } else {
+    console.error("moveUp function was not provided by JsonForms API");
+  }
 };
 </script>
 

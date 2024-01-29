@@ -2,10 +2,12 @@
 import type { ControlElement } from '@jsonforms/core';
 import { rendererProps, useJsonFormsControl } from '@jsonforms/vue';
 
-// Get props, control, and udpate functions from JsonForms (analogue to example in documentation: https://jsonforms.io/api/vue/#md:basic-control-renderer-example)
+// Get JsonForms props
 const props = defineProps({
   ...rendererProps<ControlElement>(),
 });
+// Get JsonForms state and udpate functions 
+// (analogue to example in documentation: https://jsonforms.io/api/vue/#md:basic-control-renderer-example)
 const jsonForms = useJsonFormsControl(props);
 
 // Bind local variable to input field
@@ -29,18 +31,6 @@ const addNewItem = () => {
     jsonForms.control.value
   );
 };
-
-const removeFirstValue = () => {
-  removeItems(props.path, [0])();
-};
-
-const moveDownFirstValue = () => {
-  moveDown(props.path, 0)();
-};
-
-const moveUpSecondValue = () => {
-  moveUp(props.path, 1)();
-};
 </script>
 
 <template>
@@ -53,11 +43,5 @@ const moveUpSecondValue = () => {
     <br />
     <input v-model="input" />
     <button @click="addNewItem">addNewItem</button>
-    <br />
-    <button @click="removeFirstValue">removeFirstValue</button>
-    <br />
-    <button @click="moveDownFirstValue">moveDownFirstValue</button>
-    <br />
-    <button @click="moveUpSecondValue">moveUpSecondValue</button>
   </div>
 </template>
