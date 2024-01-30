@@ -9,7 +9,7 @@ const props = defineProps({ ...rendererProps<ControlElement>() });
 const { control, addItem } = useJsonFormsArrayControl(props);
 
 // ! This throws the error (see console) !
-const addItemOnClick = () => {
+const addItemBaz = () => {
   console.log("JsonForms state before adding item: ", control.value);
   addItem(props.path, "baz")();
   console.log("JsonForms state after adding item: ", control.value);
@@ -24,6 +24,6 @@ const addItemOnClick = () => {
       </option>
     </select>
     <br />
-    <button @click="addItemOnClick">add item</button>
+    <button @click="addItemBaz">add item "baz"</button>
   </div>
 </template>
