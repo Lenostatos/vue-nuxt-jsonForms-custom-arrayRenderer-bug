@@ -8,21 +8,23 @@ import { rendererProps, useJsonFormsControl } from "@jsonforms/vue";
 const props = defineProps({ ...rendererProps<ControlElement>() });
 const jsonForms = useJsonFormsControl(props);
 
-// Define some modification functions using the JsonForms functions
-const addItemOnClick = () => {
+// ! Error during this code !
+const addItemBaz = () => {
   console.log(
     "JsonForms state before overwriting items: ",
     jsonForms.control.value
-  );
+  ); // -> [ "foo", "bar" ]
 
   const newItems = (jsonForms.control.value.data as Array<any>).concat("baz");
   console.log("Items for overwriting: ", newItems);
+  // -> [ "foo", "bar", "baz" ]
 
   jsonForms.handleChange(props.path, newItems);
   console.log(
     "JsonForms state after overwriting items: ",
     jsonForms.control.value
   );
+  // -> undefined
 };
 </script>
 
@@ -34,6 +36,6 @@ const addItemOnClick = () => {
       </option>
     </select>
     <br />
-    <button @click="addItemOnClick">add item</button>
+    <button @click="addItemBaz">add item "baz"</button>
   </div>
 </template>

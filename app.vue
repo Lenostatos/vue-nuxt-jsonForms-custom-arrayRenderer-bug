@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { JsonForms } from "@jsonforms/vue";
 import { vanillaRenderers } from "@jsonforms/vue-vanilla";
-import CustomArrayRendererBuggy from "~/components/CustomArrayRendererBuggy.vue";
-import CustomArrayRendererWorkaround from "~/components/CustomArrayRendererWorkaround.vue";
+import CustomArrayRenderer from "~/components/CustomArrayRenderer.vue";
 import { rankWith, isPrimitiveArrayControl } from "@jsonforms/core";
 
 // simple data and schema with just one array
-let data = { primitiveArray: ["foo", "bar"] };
+let data = { myPrimitiveArray: ["foo", "bar"] };
 let schema = {
   $schema: "http://json-schema.org/draft-07/schema#",
   type: "object",
   properties: {
-    primitiveArray: {
+    myPrimitiveArray: {
       type: "array",
       minItems: 1,
       items: {
@@ -21,18 +20,11 @@ let schema = {
   },
 };
 
-// Two different sets of renderers
-const renderersBuggy = Object.freeze([
+// Set up renderers
+const renderers = Object.freeze([
   ...vanillaRenderers,
   {
-    renderer: CustomArrayRendererBuggy,
-    tester: rankWith(4, isPrimitiveArrayControl),
-  },
-]);
-const renderersWorkaround = Object.freeze([
-  ...vanillaRenderers,
-  {
-    renderer: CustomArrayRendererWorkaround,
+    renderer: CustomArrayRenderer,
     tester: rankWith(4, isPrimitiveArrayControl),
   },
 ]);
@@ -48,14 +40,7 @@ const onChange = (event: any) => {
   <JsonForms
     :data="data"
     :schema="schema"
-    :renderers="renderersBuggy"
-    @change="onChange"
-  />
-  <h1>Workaround:</h1>
-  <JsonForms
-    :data="data"
-    :schema="schema"
-    :renderers="renderersWorkaround"
+    :renderers="renderers"
     @change="onChange"
   />
 </template>
